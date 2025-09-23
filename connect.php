@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "my5edb";
+$dbname = "db_webpro5e";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
