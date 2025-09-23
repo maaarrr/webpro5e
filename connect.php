@@ -2,18 +2,14 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-// jadi di connect perlu menambahkan nama databasenya agar sistem tahu
-// kita mengarah kemana
-$db = "db_webpro5e";
-
-// jadi ini sekaligus ngecek database db
+$dbname = "my5edb";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $db);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " .  $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
-// echo "Connected successfully" ."<br>";
+// echo "Connected successfully" . "<br>";
 ?>

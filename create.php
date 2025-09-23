@@ -1,22 +1,27 @@
 <?php
 include 'connect.php';
 
-// simpan data dari form ke variabel
-$name = $_POST['name'];
-$description = $_POST['description'];
-$price = $_POST['price'];
+// Cek jika form disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Ambil data dari form
+    $prodName = $_POST['name'];
+    $prodDesc = $_POST['desc'];
+    $prodPrice = $_POST['price'];
 
-// query insert
-$sql = "INSERT INTO products (name, description, price)
-        VALUES ('$name', '$description', '$price')";
+    echo "Product Name: " . $prodName . "<br>";
+    echo "Description: " . $prodDesc . "<br>";  
+    echo "Price: " . $prodPrice . "<br>";
+    
 
-if (mysqli_query($conn, $sql)) {
-    // redirect ke halaman list product
-    header('Location: read_all.php');
-    exit; // penting supaya script berhenti setelah redirect
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    // Query insert data
+    $sql = "INSERT INTO products (name, description, price) VALUES ('$prodName', '$prodDesc', '$prodPrice')";
+    echo "<br>";
+    if ($conn->query($sql) === TRUE) {
+        echo "Product successfully added.";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
-
-mysqli_close($conn);
+echo "<button type='button' onclick=\"window.location.href='read_all.php';\">View All Products</button><br>";
+$conn->close();
 ?>

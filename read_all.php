@@ -24,20 +24,20 @@ echo "<a href='form_input_product.php'>Add Product</a><br><br>";
 if ($result->num_rows > 0) {
     echo "<table border='1' cellpadding='10'>";
     echo "<tr>
-        <th>Product ID</th>
+        <th>No</th>
         <th>Product Name</th>
         <th>Description</th>
         <th>Price</th>
         <th>Created At</th>
         <th>Actions</th>
         </tr>";
-
+    $no = 1;
     // Loop melalui semua record dan tampilkan
     while ($row = $result->fetch_assoc()) {
 
         // Display the product details in a table
         echo "<tr>
-                <td>" . $row['id'] . "</td>
+                <td>" . $no++ . "</td>
                 <td>" . $row['name'] . "</td>
                 <td>" . $row['description'] . "</td>
                 <td>". $row['price'] . "</td>
