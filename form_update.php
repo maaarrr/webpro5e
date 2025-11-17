@@ -1,7 +1,7 @@
 <?php
 include 'connect.php';
 // Ambil data produk berdasarkan ID
-$id = $_GET['id'];
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $sql = "SELECT * FROM products WHERE id = $id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc(); // Ambil data produk

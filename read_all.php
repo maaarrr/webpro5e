@@ -4,7 +4,7 @@ include 'delete.php'; // Include file delete.php untuk memanggil fungsi deleteRe
 
 // Cek apakah ada permintaan penghapusan
 if (isset($_GET['delete_id'])) {
-    $delete_id = $_GET['delete_id'];
+    $delete_id = intval($_GET['delete_id']);
 
     // Panggil fungsi deleteRecord
     if (deleteRecord($conn, $delete_id)) {

@@ -16,7 +16,8 @@ PRIMARY KEY (id)
 if ($conn->query($sql) === TRUE) {
   echo "Table products created successfully";
 } else {
-  echo "Error creating table: " . $conn->error;
+  error_log('Create table error: ' . $conn->error);
+  echo "Error creating table.";
 }
 
 $conn->close();

@@ -7,7 +7,8 @@ $sql = "CREATE DATABASE my5edb";
 if ($conn->query($sql) === TRUE) {
   echo "Database created successfully";
 } else {
-  echo "Error creating database: " . $conn->error;
+  error_log('Create DB error: ' . $conn->error);
+  echo "Error creating database.";
 }
 
 $conn->close();

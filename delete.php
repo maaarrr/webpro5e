@@ -1,5 +1,4 @@
 <?php
-include 'connect.php';
 function deleteRecord($conn, $id) {
     $sql = "DELETE FROM products WHERE id = ?";
     $stmt = $conn->prepare($sql);

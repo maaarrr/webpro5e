@@ -4,24 +4,30 @@ include 'connect.php';
 // Cek jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
-    $prodName = $_POST['name'];
-    $prodDesc = $_POST['desc'];
-    $prodPrice = $_POST['price'];
-    $id = $_POST['id'];
+    $prodName = trim($_POST['name']);
+    $prodDesc = trim($_POST['desc']);
+    $prodPrice = trim($_POST['price']);
+    $id = intval($_POST['id']);
 
-    echo "Product Name: " . $prodName . "<br>";
-    echo "Description: " . $prodDesc . "<br>";  
-    echo "Price: " . $prodPrice ;
-    
-
-    // Query insert data
-    $sql = "UPDATE products SET name = '$prodName', description = '$prodDesc', price = '$prodPrice' WHERE id = $id ";
-    echo "<br>";
-    if ($conn->query($sql) === TRUE) {
-        echo "Product successfully Updated. <br> <br>";
-        echo "<button type='button' onclick=\"window.location.href='read_all.php';\">View All Products</button>";
+    // Validasi sederhana
+    if ($prodName === '' || $prodDesc === '' || !is_numeric($prodPrice) || $id <= 0) {
+        echo "Input tidak valid.";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Product Name: " . htmlspecialchars($prodName) . "<br>";
+        echo "Description: " . htmlspecialchars($prodDesc) . "<br>";
+        echo "Price: " . htmlspecialchars($prodPrice);
+
+        // Query update data dengan prepared statement
+        $stmt = $conn->prepare("UPDATE products SET name = ?, description = ?, price = ? WHERE id = ?");
+        $stmt->bind_param("ssdi", $prodName, $prodDesc, $prodPrice, $id);
+        if ($stmt->execute()) {
+            echo "Product successfully Updated. <br> <br>";
+            echo "<button type='button' onclick=\"window.location.href='read_all.php';\">View All Products</button>";
+        } else {
+            error_log('Update error: ' . $stmt->error);
+            echo "Error updating product. Please try again.";
+        }
+        $stmt->close();
     }
 }
 $conn->close();

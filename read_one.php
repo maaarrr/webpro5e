@@ -2,7 +2,11 @@
 include 'connect.php';
 
 //Read One Record
-$sql = "SELECT * FROM products WHERE id = 1"; //sql query to read one record by id
+$id = 1;
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+}
+$sql = "SELECT * FROM products WHERE id = $id"; //sql query to read one record by id
 $result = $conn->query($sql); //execute the query
 $row = $result->fetch_assoc(); //fetch the record as an associative array
 

@@ -3,16 +3,18 @@
 include 'connect.php';
 
 //Insert data
-$sql = "INSERT INTO products(name, description, price)
-VALUES ('Hardcase', 'Protect your gadget', 25.000)";
-
-//check if data is inserted
-if ($conn->query($sql) === TRUE) {
+$stmt = $conn->prepare("INSERT INTO products(name, description, price) VALUES (?, ?, ?)");
+$name = 'Hardcase';
+$desc = 'Protect your gadget';
+$price = 25000;
+$stmt->bind_param("ssd", $name, $desc, $price);
+if ($stmt->execute()) {
   echo "New record created successfully";
 } else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
+  error_log('Insert error: ' . $stmt->error);
+  echo "Error creating record.";
 }
-
+$stmt->close();
 
 $conn->close();
 ?>
